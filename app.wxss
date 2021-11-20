@@ -1,0 +1,5 @@
+/**app.wxss**/
+
+button{
+  width: 120px;
+}

@@ -1,0 +1,19 @@
+<!--pages/user/user.wxml-->
+<van-dialog id="van-dialog" />
+<view wx:if="{{Show}}" class="login">
+    <button bindtap="onLogin" type="primary">登陆 </button>
+</view>
+<view wx:else>
+    <view class="user-imageItem">
+        <image class=" user-image " src="{{avatarUrl}}" />
+    </view>
+    <view class="user-name">{{name}}</view>
+    <van-cell-group>
+        <van-cell title="个人语录" is-link inset />
+        <van-cell title="我的习惯" is-link inset />
+        <van-cell title="习惯提醒" is-link inset />
+        <van-cell title="今天已做到" is-link inset />
+        <van-cell title="朋友圈管理" is-link inset />
+        <van-cell title="退出登陆" is-link inset bindtap="unLogin" />
+    </van-cell-group>
+</view>

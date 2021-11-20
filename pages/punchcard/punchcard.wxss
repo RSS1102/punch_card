@@ -1,0 +1,29 @@
+/* pages/punchcard/punchcard.wxss */
+.habot-imgs {
+    position: relative；
+}
+
+.habit-text {
+    background: linear-gradient(to top right, #e09018, #8fc231, #c50c72);
+    background: linear-gradient(to right, red, blue);
+    /*background-clip 的意思即是背景裁剪*/
+    /*以区块内的文字作为裁剪区域向外裁剪，文字的背景即为区块的背景，文字之外的区域都将被裁剪掉。*/
+    -webkit-background-clip: text;
+    background-clip: text;
+    /*透明的*/
+    color: transparent;
+    font-weight: bold;
+    font-size: 18px;
+    position: absolute;
+    right: 25rpx;
+    top: 350rpx;
+}
+
+.habit-img {
+    width: 100vw;
+    height: 400rpx;
+}
+
+.habit-btn {
+    margin-top: 180rpx;
+}

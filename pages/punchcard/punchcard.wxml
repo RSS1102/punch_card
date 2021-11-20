@@ -1,0 +1,16 @@
+<!--pages/punchcard/punchcard.wxml-->
+<van-dialog id="van-dialog" />
+<view class="habot-imgs">
+    <text class="habit-text"> 点击抽取今日推荐封面</text>
+    <image class="habit-img" src="{{img}}" bindtap="randomImg"> </image>
+</view>
+<van-cell-group>
+    <van-field left-icon="records" label="习惯名称：" model:value="{{ title }}" placeholder="指定一个习惯名称" required />
+    <van-field bindtap="setTime" readonly left-icon="underway-o" label="打卡周期" model:value="{{ time }}" placeholder="点击为自己选择一个完成期限" required />
+    <van-field autosize type="textarea" left-icon="hot-o" label="勉励的话语" model:value="{{ encourage }}" placeholder="写一句激励你前进的话语吧" required />
+</van-cell-group>
+<button type="primary" class="habit-btn" bindtap="setPlan">制定习惯</button>
+<!-- 弹出层 -->
+<van-popup show="{{ popupShow }}" bind:close="onClose" position="bottom">
+    <van-picker title="你要几天完成这些目标" default-index="{{ 3 }}" columns="{{ columns }}" bind:cancel="onCancel" bind:confirm="onConfirm" show-toolbar />
+</van-popup>
