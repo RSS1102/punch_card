@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/userepisode/userplans.js
 const db = wx.cloud.database()
 const dbHabit = db.collection('habits')
 Page({
@@ -8,20 +8,22 @@ Page({
      */
     data: {
 
-
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        dbHabit.orderBy('encourage', 'desc')
+        let openid = wx.getStorageSync('userInfo').openid
+        console.log(openid)
+        dbHabit.where({
+                _openid: openid
+            }).orderBy('encourage', 'desc')
             .get()
             .then(res => {
                 console.log(res)
             }).catch(console.error)
     },
-
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
