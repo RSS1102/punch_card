@@ -3,6 +3,7 @@
 const db = wx.cloud.database()
 const dbHabit = db.collection('habits')
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+const util = require("../../utils/util")
 Page({
 
     /**
@@ -14,7 +15,8 @@ Page({
         title: "",
         encourage: "",
         img: "",
-        dateDue: ""
+        dateDue: "",
+        formatDate: ""
     },
 
     /**
@@ -41,30 +43,38 @@ Page({
     },
 
     randomImg() {
+
         let img = ""
         let Num = parseInt(Math.random() * 4)
         console.log(Num)
         switch (Num) {
             case 0:
-                img = "../../images/habit/stick0.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick0.png";
                 break;
             case 1:
-                img = "../../images/habit/stick1.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick1.png";
                 break;
             case 2:
-                img = "../../images/habit/stick2.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick2.png";
                 break;
             case 3:
-                img = "../../images/habit/stick3.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick3.png";
                 break;
             case 4:
-                img = "../../images/habit/stick4.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick4.png";
                 break;
 
         }
         this.setData({
-            img: img
+            img: img,
+            loading:true
         })
+        setTimeout(()=>{
+            this.setData({
+                loading:false
+            })
+        },1000)
+
         this.data.img = img
     },
     //打卡周期
@@ -93,7 +103,7 @@ Page({
         })
         this.formatTime(index)
     },
-    // 格式化时间
+    // 计算时间-格式化时间
     formatTime(index) {
         console.log(index)
         // 今天 - 格式化为毫秒
@@ -108,6 +118,9 @@ Page({
         dateDue.setTime(thedays)
         this.data.dateDue = dateDue
         console.log(dateDue)
+        //格式化时间
+        this.data.formatDate = util.formatTime(this.data.dateDue)
+        console.log(this.data.formatDate)
     },
 
     // 指定计划
@@ -163,6 +176,7 @@ Page({
                 title: this.data.title,
                 dateDue: this.data.dateDue,
                 encourage: this.data.encourage,
+                formatDate: this.data.formatDate,
                 alreadyDone: false,
             }
         }).then(res => {

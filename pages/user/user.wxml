@@ -9,9 +9,9 @@
     </view>
     <view class="user-name">{{name}}</view>
     <van-cell-group>
-        <van-cell title="我的计划" is-link inset />
-        <van-cell title="习惯提醒" is-link inset />
-        <van-cell title="我已做到" is-link inset />
+        <van-cell title="我的计划" is-link inset bindtap="allPlan" />
+        <van-cell title="习惯提醒" is-link inset bindtap="undonePlan" />
+        <van-cell title="我已做到" is-link inset bindtap="donePlan" />
         <van-cell title="朋友圈管理" is-link inset />
         <van-cell title="退出登陆" is-link inset bindtap="unLogin" />
     </van-cell-group>

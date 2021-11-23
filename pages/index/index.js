@@ -2,26 +2,27 @@
 const db = wx.cloud.database()
 const dbHabit = db.collection('habits')
 Page({
-
     /**
      * 页面的初始数据
      */
     data: {
-
-
+        habits: {}
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        dbHabit.orderBy('encourage', 'desc')
-            .get()
-            .then(res => {
-                console.log(res)
-            }).catch(console.error)
-    },
+        wx.cloud.callFunction({
+            name: "gethabitlist"
+        }).then(res => {
+            console.log(res)
+            this.setData({
+                habits: res.result.data
+            })
+        })
 
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

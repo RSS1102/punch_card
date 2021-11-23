@@ -2,7 +2,10 @@
 <van-dialog id="van-dialog" />
 <view class="habot-imgs">
     <text class="habit-text"> 点击抽取今日推荐封面</text>
-    <image class="habit-img" src="{{img}}" bindtap="randomImg"> </image>
+    <van-loading class="habit-loading" type="spinner" color="#1989fa" wx:if="{{loading}}" />
+    <image class="habit-img" src="{{img}}" bindtap="randomImg">
+
+    </image>
 </view>
 <van-cell-group>
     <van-field left-icon="records" label="习惯名称：" model:value="{{ title }}" placeholder="指定一个习惯名称" required />
