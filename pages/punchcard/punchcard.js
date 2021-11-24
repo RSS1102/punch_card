@@ -3,6 +3,7 @@
 const db = wx.cloud.database()
 const dbHabit = db.collection('habits')
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+const util = require("../../utils/util")
 Page({
 
     /**
@@ -13,7 +14,9 @@ Page({
         columns: ['1 day', '2 days', '3 days', '4 days', '5 days', '6 days', '7 days'],
         title: "",
         encourage: "",
-        img: ""
+        img: "",
+        dateDue: "",
+        formatDate: ""
     },
 
     /**
@@ -21,7 +24,6 @@ Page({
      */
     onLoad: function (options) {
         this.data.userInfo = wx.getStorageSync('userInfo')
-
     },
 
     /**
@@ -41,32 +43,41 @@ Page({
     },
 
     randomImg() {
+
         let img = ""
         let Num = parseInt(Math.random() * 4)
         console.log(Num)
         switch (Num) {
             case 0:
-                img = "../../images/habit/stick0.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick0.png";
                 break;
             case 1:
-                img = "../../images/habit/stick1.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick1.png";
                 break;
             case 2:
-                img = "../../images/habit/stick2.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick2.png";
                 break;
             case 3:
-                img = "../../images/habit/stick3.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick3.png";
                 break;
             case 4:
-                img = "../../images/habit/stick4.png";
+                img = "cloud://rss-mysql-0ggtqs6y79588e4f.7273-rss-mysql-0ggtqs6y79588e4f-1306466803/habitimg/stick4.png";
                 break;
 
         }
         this.setData({
-            img: img
+            img: img,
+            loading:true
         })
+        setTimeout(()=>{
+            this.setData({
+                loading:false
+            })
+        },1000)
+
         this.data.img = img
     },
+    //打卡周期
     setTime() {
         this.setData({
             popupShow: true
@@ -81,12 +92,38 @@ Page({
         this.setData({
             popupShow: false
         })
-        const { picker, value, index } = event.detail;
+        const {
+            picker,
+            value,
+            index
+        } = event.detail;
         console.log(`当前值：${value}, 当前索引：${index}`);
         this.setData({
             time: value
         })
+        this.formatTime(index)
     },
+    // 计算时间-格式化时间
+    formatTime(index) {
+        console.log(index)
+        // 今天 - 格式化为毫秒
+        let toDay = new Date()
+        let todayNum = toDay.getTime()
+        console.log(todayNum)
+        // 将时间相加
+        let thedays = (1000 * 60 * 60 * 24) * (index + 1) + todayNum
+        console.log(thedays)
+        // 过期时间 格式化为时间
+        let dateDue = new Date()
+        dateDue.setTime(thedays)
+        this.data.dateDue = dateDue
+        console.log(dateDue)
+        //格式化时间
+        this.data.formatDate = util.formatTime(this.data.dateDue)
+        console.log(this.data.formatDate)
+    },
+
+    // 指定计划
     setPlan() {
         let userInfo = wx.getStorageSync('userInfo')
         console.log(userInfo)
@@ -105,14 +142,13 @@ Page({
                 title: '请先登陆',
             })
         }
-
-
     },
+    //确认制定
     confirmDialog() {
         Dialog.confirm({
-            title: '制定计划',
-            message: '你确定制定这个计划吗？',
-        })
+                title: '制定计划',
+                message: '你确定制定这个计划吗？',
+            })
             .then(() => {
                 // on confirm
                 this.saveHabit()
@@ -129,20 +165,22 @@ Page({
                 })
             });
     },
+    // 储存内容
     saveHabit() {
-        console.log(this.data.title, this.data.time, this.data.encourage, this.data.img)
+        console.log(this.data.title, this.data.dateDue, this.data.encourage, this.data.img)
         let userInfo = wx.getStorageSync('userInfo')
         dbHabit.add({
             data: {
                 userInfo: userInfo,
                 img: this.data.img,
                 title: this.data.title,
-                time: this.data.time,
+                dateDue: this.data.dateDue,
                 encourage: this.data.encourage,
+                formatDate: this.data.formatDate,
+                alreadyDone: false,
             }
         }).then(res => {
             console.log(res)
         }).catch(console.error)
-
-    }
+    },
 })

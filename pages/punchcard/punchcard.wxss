@@ -18,6 +18,11 @@
     right: 25rpx;
     top: 350rpx;
 }
+.habit-loading{
+    position: absolute;
+    right: 375rpx;
+    top: 150rpx;
+}
 
 .habit-img {
     width: 100vw;

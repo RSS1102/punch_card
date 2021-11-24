@@ -1,39 +1,43 @@
 {
-  "pages": [
-    "pages/user/user",
-    "pages/index/index",
-    "pages/punchcard/punchcard"
-
-  ],
-  "window": {
-    "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "punchCard",
-    "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "朋友圈",
-      "iconPath": "./images/tabbar/un_index.png",
-      "selectedIconPath": "./images/tabbar/on_index.png"
-    }, {
-      "pagePath": "pages/punchcard/punchcard",
-      "text": "打卡",
-      "iconPath": "./images/tabbar/un_punch.png",
-      "selectedIconPath": "./images/tabbar/on_punch.png"
-    }, {
-      "pagePath": "pages/user/user",
-      "text": "我的",
-      "iconPath": "./images/tabbar/un_user.png",
-      "selectedIconPath": "./images/tabbar/on_user.png"
-    }]
-  },
-  "networkTimeout": {
-    "request": 10000,
-    "downloadFile": 10000
-  },
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+    "pages": [
+        "pages/user/user",
+        "pages/index/index",
+        "pages/punchcard/punchcard",
+        "pages/userepisode/userplan/userplan"
+    ],
+    "window": {
+        "backgroundColor": "#F6F6F6",
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#F6F6F6",
+        "navigationBarTitleText": "punchCard",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "朋友圈",
+                "iconPath": "./images/tabbar/un_index.png",
+                "selectedIconPath": "./images/tabbar/on_index.png"
+            },
+            {
+                "pagePath": "pages/punchcard/punchcard",
+                "text": "打卡",
+                "iconPath": "./images/tabbar/un_punch.png",
+                "selectedIconPath": "./images/tabbar/on_punch.png"
+            },
+            {
+                "pagePath": "pages/user/user",
+                "text": "我的",
+                "iconPath": "./images/tabbar/un_user.png",
+                "selectedIconPath": "./images/tabbar/on_user.png"
+            }
+        ]
+    },
+    "networkTimeout": {
+        "request": 10000,
+        "downloadFile": 10000
+    },
+    "sitemapLocation": "sitemap.json",
+    "lazyCodeLoading": "requiredComponents"
 }

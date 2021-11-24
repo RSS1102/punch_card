@@ -46,7 +46,7 @@ Page({
                     title: '登陆失败,请重试',
                 })
             },
-            complete: (res) => { },
+            complete: (res) => {},
         })
     },
     //getopenid
@@ -54,7 +54,9 @@ Page({
         wx.cloud.callFunction({
             name: "getopneid"
         }).then(res => {
-            this.data.userInfo = Object.assign(result.userInfo, { openid: res.result.openid })
+            this.data.userInfo = Object.assign(result.userInfo, {
+                openid: res.result.openid
+            })
             console.log(this.data.userInfo)
             this.saveUserInfo()
         }).catch(err => {
@@ -66,8 +68,8 @@ Page({
         let saveAlready = false
         let _id = ""
         await dbUser.where({
-            openid: this.data.userInfo.openid
-        }).get()
+                openid: this.data.userInfo.openid
+            }).get()
             .then(res => {
                 saveAlready = true
                 _id = res.data[0]._id
@@ -111,9 +113,9 @@ Page({
     // unlogin
     unLogin() {
         Dialog.confirm({
-            title: '退出登陆',
-            message: '退出登陆 则不能想享受现在的服务',
-        })
+                title: '退出登陆',
+                message: '退出登陆 则不能想享受现在的服务',
+            })
             .then(() => {
                 // on confirm
                 this.removeStorage()
@@ -136,7 +138,21 @@ Page({
         this.setData({
             Show: true
         })
+    },
+    allPlan() {
+        wx.navigateTo({
+            url: '/pages/userepisode/userplan/userplan?habit=' + "allPlan",
+        })
+    },
+    undonePlan() {
+        wx.navigateTo({
+            url: '/pages/userepisode/userplan/userplan?habit=' + "undonePlan",
+        })
+    },
+    donePlan() {
+        wx.navigateTo({
+            url: '/pages/userepisode/userplan/userplan?habit=' + "donePlan",
+        })
     }
-
 
 })

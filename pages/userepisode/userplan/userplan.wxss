@@ -1,6 +1,6 @@
 .box {
     border-radius: 10rpx;
-    
+
     margin-bottom: 80rpx;
     border: 3rpx solid rgb(80, 74, 74);
     padding-bottom: 60rpx;
@@ -61,6 +61,7 @@
     position: absolute;
     right: 50rpx;
 }
+
 .tag {
     font-size: 15px;
     position: absolute;
