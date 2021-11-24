@@ -41,7 +41,7 @@ Page({
             this.setData({
                 habits: res.result.habit.data,
             })
-            wx.hideLoading()
+            wx.hideLoading();
         })
 
     },

@@ -111,18 +111,26 @@ Page({
     doPlan(event,data) {
         console.log(event)
         let id = event.currentTarget.dataset.item._id
+        let index =event.currentTarget.dataset.bindex
         Dialog.confirm({
                 title: '完成计划',
                 message: '您确定这个计划完成了吗？',
             })
             .then(() => {
                 // on confirm
+                let  alreadyDone= true
                 dbHabit.doc(id).update({
                     data: {
-                        alreadyDone: true
+                        alreadyDone: alreadyDone
                     }
                 }).then(res => {
                     console.log(res)
+                    this.setData({
+                        // wx:for 循环
+                        // wx:for-item=‘变量名(自定义)’ 代表当前循环对象
+                        // wx:for-index=‘变量名(自定义)’，当前对象的索引值
+                        [`habits[${index}].alreadyDone`]: alreadyDone,
+                      })
                 }).catch(console.catch)
                
             })
@@ -134,8 +142,7 @@ Page({
                     duration: 2000
                 })
             })
-
-
+          
 
 
     }

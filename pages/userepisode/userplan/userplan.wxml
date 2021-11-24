@@ -1,11 +1,11 @@
 <van-dialog id="van-dialog" />
-<view class="box" wx:for="{{habits}}" wx:key="index" >
+<view class="box" wx:for="{{habits}}" wx:key="index" wx:for-index="bindex">
     <view class="title">{{item.title}}</view>
     <view class="userinfo">
         <image class="avatarUrl" src="{{item.userInfo.avatarUrl}}" />
         <view class="nickName"><text class="nickName-info">姓名：{{item.userInfo.nickName}}</text></view>
         <van-tag wx:if="{{item.alreadyDone}}" size="large" type="success " class="tag">已完成</van-tag>
-        <van-tag wx:if="{{!item.alreadyDone}}" size="large" type="primary" class="tag" bindtap="doPlan" data-item="{{item}}">未完成</van-tag>
+        <van-tag wx:if="{{!item.alreadyDone}}" size="large" type="primary" class="tag" bindtap="doPlan" data-item="{{item}}" data-bindex= '{{bindex}}'> 未完成</van-tag>
         <van-tag wx:if="{{item.pastDue}}" size="large" type="warning" class="tag">已过期</van-tag>
     </view>
     <image class="img" src="{{item.img}}" />
