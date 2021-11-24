@@ -20,8 +20,8 @@
                 },
                 {
                     "name": "",
-                    "pathName": "pages/userepisode/userplans/userplans",
-                    "query": "",
+                    "pathName": "pages/userepisode/userplan/userplan",
+                    "query": "habit=allPlan",
                     "scene": null
                 },
                 {

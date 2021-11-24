@@ -1,23 +1,27 @@
 // pages/index/index.js
 const db = wx.cloud.database()
 const dbHabit = db.collection('habits')
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        habits: {}
+        habits: {},
+        toDay: ""
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        this.data.toDay = new Date()
         console.log(options)
         let habit = options.habit
         console.log(wx.getStorageSync('userInfo').openid)
         let openid = wx.getStorageSync('userInfo').openid
         switch (habit) {
+            //1我的计划
             case "allPlan":
                 console.log('allPlan')
                 dbHabit.orderBy('encourage', 'desc')
@@ -27,30 +31,34 @@ Page({
                     .get()
                     .then(res => {
                         console.log(res)
-                        this.setData({
-                            habits: res.data
-                        })
+                        this.allPlan(res.data)
                     }).catch(console.error)
                 break;
+                //2习惯提醒
             case "undonePlan":
                 console.log('undonePlan')
                 dbHabit.orderBy('encourage', 'desc')
                     .where({
-                        _openid: openid
+                        _openid: openid,
+                        alreadyDone: false
                     })
                     .get()
                     .then(res => {
                         console.log(res)
+
                         this.setData({
                             habits: res.data
                         })
                     }).catch(console.error)
                 break;
+                //我已做到
             case "donePlan":
                 console.log('donePlan')
                 dbHabit.orderBy('encourage', 'desc')
                     .where({
-                        _openid: openid
+                        _openid: openid,
+                        alreadyDone: true
+
                     })
                     .get()
                     .then(res => {
@@ -71,53 +79,65 @@ Page({
                 break;
         }
     },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
-
+    async allPlan(data) {
+        console.log("data", data)
+        let today = new Date()
+        let datas = []
+        let total = 0
+        await dbHabit.count().then(res => {
+            total = res.total
+            console.log(res.total)
+        }).catch(console.error)
+        for (let i = 0; i < total; i++) {
+            let obj = {}
+            if (data[i].dateDue < today) {
+                console.log("jia")
+                obj = Object.assign(data[i], {
+                    pastDue: true
+                })
+            } else {
+                console.log("zhen")
+                obj = Object.assign(data[i], {
+                    pastDue: false
+                })
+            }
+            datas.push(obj)
+        }
+        console.log("datas", datas)
+        this.setData({
+            habits: datas
+        })
     },
+    doPlan(event,data) {
+        console.log(event)
+        let id = event.currentTarget.dataset.item._id
+        Dialog.confirm({
+                title: '完成计划',
+                message: '您确定这个计划完成了吗？',
+            })
+            .then(() => {
+                // on confirm
+                dbHabit.doc(id).update({
+                    data: {
+                        alreadyDone: true
+                    }
+                }).then(res => {
+                    console.log(res)
+                }).catch(console.catch)
+               
+            })
+            .catch(() => {
+                // on cancel
+                wx.showToast({
+                    title: '取消',
+                    icon: "none",
+                    duration: 2000
+                })
+            })
 
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
 
-    },
 
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
 
     }
+
 })

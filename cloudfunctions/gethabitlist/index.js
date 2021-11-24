@@ -15,8 +15,18 @@ exports.main = async (event, context) => {
         .then(res => {
             habit = res
             console.log("res:", res)
-
         }).catch(console.error)
-    console.log("habit:", habit)
-    return habit
+    await dbHabit.count()
+        .then(res => {
+            count = res
+            console.log("res:", res)
+        }).catch(console.error)
+        let today=new Date()
+        console.log(today)
+    return {
+        habit,
+        count,
+        today
+    }
+
 }
