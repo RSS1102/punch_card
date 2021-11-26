@@ -1,11 +1,15 @@
+page {
+    background: rgba(208, 218, 205, 0.8);
+}
+
 .box {
     border-radius: 10rpx;
-
     margin-bottom: 80rpx;
     border: 3rpx solid rgb(80, 74, 74);
     padding-bottom: 60rpx;
-    background: rgba(219, 230, 216, 0.2);
+    background: rgb(245, 244, 241);
 }
+
 
 .userinfo {
     display: flex;
@@ -50,6 +54,8 @@
 .encourage {
     border: 3rpx solid rgb(80, 74, 74);
     padding: 20rpx 0 20rpx 0;
+    /* 自动换行 */
+    word-break: break-all;
 }
 
 .encourage-info {
